@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'path/to/database.sqlite', // Replace with the path to your SQLite database file
+    storage: 'data.db', // Replace with the path to your SQLite database file
 });
 
 module.exports = sequelize;
@@ -10,45 +10,52 @@ module.exports = sequelize;
 const Attractions = sequelize.define('Attractions', {
     // Model attributes are defined here
     id: {
-
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    lastName: {
-        type: DataTypes.STRING
-    }
-});
-const User = sequelize.define('Userdata', {
-    // Model attributes are defined here
-    id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     name: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
-    email: {
-        type: DataTypes.STRING,
+    lat: {
+        type: Sequelize.DataTypes.FLOAT,
         allowNull: false
     },
-    hash: {
-        type: DataTypes.STRING,
+    long: {
+        type: Sequelize.DataTypes.FLOAT,
+        allowNull: false
+    },
+});
+const User = sequelize.define('Userdata', {
+    // Model attributes are defined here
+    id: {
+        type: Sequelize.DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    name: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+    },
+    username: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
     age: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
     childNumber: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
     childAges: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         get() {
             return this.getDataValue('childAges').split(';');
         },
@@ -57,7 +64,7 @@ const User = sequelize.define('Userdata', {
         },
     },
     childSex: {
-        type: DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING,
         get() {
             return this.getDataValue('childSex').split(';');
         },

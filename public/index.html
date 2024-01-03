@@ -9,20 +9,67 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon">    
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
 
   </head>
   <body>
-    <div id='map' style='width: 400px; height: 300px;'></div>
-    <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoidmFsYWtpIiwiYSI6ImNscXk5ajJzNDBtc2wyanBjYTVjNDR6NjcifQ.tV3Rh4n0ZrApBUotAZe-yQ';
-    const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: [-74.5, 40], // starting position [lng, lat]
-        zoom: 9, // starting zoom
-    });
-    </script>
+  <form action="http://localhost:3000/register" method="POST">
+    <label for="name">Parent Name:</label>
+    <input type="text" id="name" name="name" required>
 
+    <label for="age">Parent Age:</label>
+    <input type="number" id="age" name="age" required>
 
+    <h3>Children:</h3>
+    <div id="childrenContainer">
+      <!-- Children will be dynamically added here -->
+    </div>
+
+    <button type="button" onclick="addChild()">Add Child</button>
+    <button type="submit" value="submit">Submit</button>
+  </form>
+
+  <script>
+    function addChild() {
+      const childrenContainer = document.getElementById('childrenContainer');
+
+      const childDiv = document.createElement('div');
+
+      const nameLabel = document.createElement('label');
+      nameLabel.textContent = 'Child Name:';
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.name = 'childName';
+      nameLabel.appendChild(nameInput);
+
+      const genderLabel = document.createElement('label');
+      genderLabel.textContent = 'Gender:';
+      const genderInput = document.createElement('select');
+      genderInput.name = 'childGender';
+      const optionMale = document.createElement('option');
+      optionMale.value = 'male';
+      optionMale.textContent = 'Male';
+      const optionFemale = document.createElement('option');
+      optionFemale.value = 'female';
+      optionFemale.textContent = 'Female';
+      genderInput.appendChild(optionMale);
+      genderInput.appendChild(optionFemale);
+      genderLabel.appendChild(genderInput);
+
+      const ageLabel = document.createElement('label');
+      ageLabel.textContent = 'Age:';
+      const ageInput = document.createElement('input');
+      ageInput.type = 'number';
+      ageInput.name = 'childAge';
+      ageLabel.appendChild(ageInput);
+
+      childDiv.appendChild(nameLabel);
+      childDiv.appendChild(genderLabel);
+      childDiv.appendChild(ageLabel);
+
+      childrenContainer.appendChild(childDiv);
+    }
+  </script>
   </body>
 </html>

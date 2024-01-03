@@ -1,13 +1,78 @@
 const express = require('express');
-const db = require('db.js');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const db = require('./db.js');
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.json());
+
+// app.post('/register', async (req, res) => {
+//     const { username, password } = req.body;
+//     const hashedPassword = bcrypt.hashSync(password, 8);
+
+//     try {
+//         const user = await db.User.create({ username, password: hashedPassword });
+//         res.status(200).send({ id: user.id });
+//     } catch (err) {
+//         console.error('Error registering user:', err);
+//         res.status(500).send('There was a problem registering the user.');
+//     }
+// });
+
+// app.post('/login', async (req, res) => {
+//     const { username, password } = req.body;
+
+//     try {
+//         const user = await db.User.findOne({ where: { username } });
+//         if (!user) {
+//             return res.status(404).send('No user found.');
+//         }
+
+//         const passwordIsValid = bcrypt.compareSync(password, user.password);
+//         if (!passwordIsValid) {
+//             return res.status(401).send({ auth: false, token: null });
+//         }
+
+//         res.status(200).send({ auth: true, token: 'random_token' }); // replace "random_token" with a real JWT
+//     } catch (err) {
+//         console.error('Error finding user:', err);
+//         res.status(500).send('There was a problem finding the user.');
+//     }
+// });
 
 app.get('/', (req, res) => {
-    res.send('Hello, world!');
+  app.use(express.static('public'));
+  res.redirect('/index.html');
 });
 
+
+
+app.post('/register', async (req, res) => {
+  const { name, age } = req.body;
+  console.log(req.body);
+  res.status(200).redirect('/map.html');
+});
+
+
+
+
+app.get('/getroute', (req, res) => {
+    console.log(req.body);
+    async function getRoute(ai_resp) {
+
+        points 
+        let route = '';
+        for (let i = 0; i < points.length; i++) {
+          route += `${points[i][0]},${points[i][1]};`;
+        }
+        const query = await fetch(
+          `https://api.mapbox.com/directions/v5/mapbox/cycling/${route}?steps=true&geometries=geojson&access_token=${process.env.MAPBOX_TOKEN}`,
+          { method: 'GET' }
+        );
+        }
+      })
+      
 app.get('/getrec/:userid', (req, res) => {
     function recommend(userid) {
         userdata = db.User.findOne({where: {id: userid}});
