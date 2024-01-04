@@ -5,13 +5,20 @@ form {
 }
 .child {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 5fr 2fr 2fr 1fr;
 }
 .child > label {
     padding: 3px;
 }
-
+.about_text{
+    margin-left: 30%;
+    margin-right: 30%;
+}
 @media screen and (max-width: 768px) {
+    .about_text{
+        margin-left: 5%;
+        margin-right: 5%;
+    }
     form {
         margin-top: 5%;
         margin-left: 5%;
@@ -26,6 +33,11 @@ form {
         margin-right: 1%;
     }
 }
+address, blockquote, dl, figure, form, ol, p, pre, table, ul{
+
+    color: black;
+}
+
 
 
 

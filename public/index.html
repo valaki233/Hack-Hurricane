@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" prefers-color-scheme: dark>
+<!DOCTYPE html >
+<html lang="en" prefers-color-scheme: dark style="--primary: #739072; --background-color: #D2E3C8 --color: #000000; --primary-hover: #4F6F52;">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
       <div class="container" style="text-align: center;">
         <div class="row">
           <div class="col-12">
-            <h1><a href="/about">ABOUT</a> :: <a href="">AI-PARK</a></h1>
+            <h1><a href="/about">ABOUT</a> :: <a href="/">AI-PARK</a></h1>
             
           </div>
         </div>
@@ -37,10 +37,15 @@
     </div>
 
     <button type="button" onclick="addChild()">Add Child</button>
-    <button type="submit" value="submit">Submit</button>
+    <button type="submit" value="submit">Give me a map</button>
   </form>
 
   <script>
+    function delChild(id){
+      var child = document.getElementById(id).parentElement.parentElement;
+      childrenContainer.removeChild(child);
+
+    }
     var i = 0;
     function addChild() {
       i++;
@@ -62,8 +67,16 @@
       const DEL = document.createElement('button');
       DEL.name = 'childDEL';
       DEL.id = `childDEL${i}`;
+      DEL.type = 'button';
+      DEL.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+</svg>`;
+      
+      DEL.style = 'margin-top: 5px; --primary-hover: #a13c2f; font-size: 1rem; ';
       DELlabel.appendChild(DEL);
-
+      DEL.addEventListener('click', function(){
+        delChild(DEL.id);
+      });
       const genderLabel = document.createElement('label');
       genderLabel.textContent = 'Gender:';
       const genderInput = document.createElement('select');
