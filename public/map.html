@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='en' prefers-color-scheme: dark style="--primary: #739072; --background-color: #D2E3C8 --color: #000000; --primary-hover: #4F6F52;">
   <head>
-    <meta charset='utf-8' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Map</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">    
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
         body {
             margin: 0;
@@ -14,6 +18,7 @@
 
         #map {
             position: absolute;
+            height: 100%;
             top: 0;
             bottom: 0;
             width: 100%;
@@ -21,7 +26,16 @@
  </style>
   </head>
   <body>
+    <div class="header">
+        <div class="container" style="text-align: center;">
+          <div class="row">
+            <div class="col-12">
+              <h1><a href="/about">ABOUT</a> :: <a href="/">AI-PARK</a></h1>
+              
+            </div>
+          </div>
+        </div>
     <div id='map'></div>
-    <script src="./map.js"></script>
+    <script src="map.js"></script>
   </body>
 </html>

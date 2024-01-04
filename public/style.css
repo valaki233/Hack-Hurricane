@@ -3,6 +3,12 @@ form {
     margin-left: 25%;
     margin-right: 25%;
 }
+.text-section{
+    margin-left: 25%; 
+    margin-right: 25%;
+
+}
+
 .child {
     display: grid;
     grid-template-columns: 5fr 2fr 2fr 1fr;
@@ -15,6 +21,11 @@ form {
     margin-right: 30%;
 }
 @media screen and (max-width: 768px) {
+    .text-section{
+        margin-left: 5%; 
+        margin-right: 5%;
+    
+    }
     .about_text{
         margin-left: 5%;
         margin-right: 5%;
@@ -27,6 +38,11 @@ form {
 }
 
 @media screen and (max-width: 480px) {
+    .text-section{
+        margin-left: 1%; 
+        margin-right: 1%;
+    
+    }
     form {
         margin-top: 1%;
         margin-left: 1%;
