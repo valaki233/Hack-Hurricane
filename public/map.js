@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoidmFsYWtpIiwiYSI6ImNscXk5ajJzNDBtc2wyanBjYTVjNDR6NjcifQ.tV3Rh4n0ZrApBUotAZe-yQ';
+mapboxgl.accessToken = 'YOUR API KEY HERE';
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
@@ -90,11 +90,11 @@ fetch('/attractions')
             stopsList.appendChild(listItem);
 
 
-            // Create a marker with a popup
-            const marker = new mapboxgl.Marker({
-                element: createCustomMarker()
-            })
-            .setLngLat([attraction.long, attraction.lat])
+            const marker2 = new mapboxgl.Marker({
+                color: "#3887be",
+                background: "transparent",
+                draggable: false
+                }).setLngLat([attraction.long, attraction.lat])
             .addTo(map);
 
             // Create a popup
@@ -102,7 +102,7 @@ fetch('/attractions')
                 .setHTML(`<h3 style="color: black; margin-bottom: 0; margin-top: 14px;">${attraction.name}</h3>`);
 
             // Add the popup to the marker
-            marker.setPopup(popup);
+            marker2.setPopup(popup);
             
             // Add click event listener to the li element
             listItem.addEventListener('click', () => {
@@ -115,14 +115,5 @@ fetch('/attractions')
             });
         });
 
-        function createCustomMarker() {
-            const markerElement = document.createElement('div');
-            markerElement.style.backgroundColor = '#00000000';
-            markerElement.style.borderColor = '#00000000';
-            markerElement.style.backgroundImage = 'url(location.png);'
-            markerElement.style.width = '25px';
-            markerElement.className = 'custom-marker';
-            return markerElement;
-        }
     })
     .catch(error => console.error('Error:', error));
