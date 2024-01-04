@@ -5,7 +5,7 @@ const map = new mapboxgl.Map({
     center: [-117.918911, 33.812373], // starting position
     zoom: 15
 });
-
+const fetchy = [];
 fetch('/attractions')
 .then(async response => await response.json())
 .then(attractions => {
@@ -14,49 +14,115 @@ fetch('/attractions')
         const latitude = attraction.lat;
         const longitude = attraction.long;
         console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-        return `${longitude},${latitude}`; // Swap longitude and latitude positions
-    }).join(';'); // Join the array elements with a semicolon
+        return {
+            name: attraction.name,
+            coordinates: [longitude, latitude]
+        };
+    });
     
     console.log(typeof(attractions));
     
     console.log(fetchy);
     return fetch(
-        `https://api.mapbox.com/directions/v5/mapbox/cycling/${fetchy}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+        `https://api.mapbox.com/directions/v5/mapbox/cycling/${fetchy.map(stop => stop.coordinates.join(',')).join(';')}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
         { method: 'GET' }
     );
 })
-    .then(response => response.json())
-    .then(data => {
-        const route = data.routes[0].geometry.coordinates;
-        const geojson = {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-                type: 'LineString',
-                coordinates: route
+.then(response => response.json())
+.then(data => {
+    const route = data.routes[0].geometry.coordinates;
+    const geojson = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+            type: 'LineString',
+            coordinates: route
+        }
+    };
+    // if the route already exists on the map, we'll reset it using setData
+    if (map.getSource('route')) {
+        map.getSource('route').setData(geojson);
+    } else { // otherwise, we'll add it to the map
+        map.addLayer({
+            id: 'route',
+            type: 'line',
+            source: {
+                type: 'geojson',
+                data: geojson
+            },
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            paint: {
+                'line-color': '#3887be',
+                'line-width': 5,
+                'line-opacity': 0.75
             }
-        };
-        // if the route already exists on the map, we'll reset it using setData
-        if (map.getSource('route')) {
-            map.getSource('route').setData(geojson);
-        } else { // otherwise, we'll add it to the map
-            map.addLayer({
-                id: 'route',
-                type: 'line',
-                source: {
-                    type: 'geojson',
-                    data: geojson
-                },
-                layout: {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                paint: {
-                    'line-color': '#3887be',
-                    'line-width': 5,
-                    'line-opacity': 0.75
-                }
+        });
+    }
+    
+})
+.catch(error => console.error('Error:', error));
+
+// Select the ul element with the class 'stops'
+const stopsList = document.querySelector('.stops');
+
+// Fetch data from '/attractions'
+fetch('/attractions')
+    .then(async response => await response.json())
+    .then(attractions => {
+        // Iterate over the attractions array
+        attractions.attractions.forEach(attraction => {
+            // Create a new li element
+            const listItem = document.createElement('li');
+
+            // Set the text content to the attraction name
+            listItem.textContent = attraction.name;
+            listItem.style.paddingBottom = '5px';
+            listItem.style.paddingTop = '5px';
+
+            // Add latitude and longitude as classes to the li element
+            listItem.classList.add(`${attraction.lat}`);
+            listItem.classList.add(`${attraction.long}`);
+
+            // Append the li element to the ul
+            stopsList.appendChild(listItem);
+
+
+            // Create a marker with a popup
+            const marker = new mapboxgl.Marker({
+                element: createCustomMarker()
+            })
+            .setLngLat([attraction.long, attraction.lat])
+            .addTo(map);
+
+            // Create a popup
+            const popup = new mapboxgl.Popup({ offset: 25 })
+                .setHTML(`<h3 style="color: black; margin-bottom: 0; margin-top: 14px;">${attraction.name}</h3>`);
+
+            // Add the popup to the marker
+            marker.setPopup(popup);
+            
+            // Add click event listener to the li element
+            listItem.addEventListener('click', () => {
+                // Code to run when the text is clicked
+                console.log(`${attraction.name}`);
+
+                map.jumpTo({ center: [attraction.long, attraction.lat], zoom: 18 });
+
+                
             });
+        });
+
+        function createCustomMarker() {
+            const markerElement = document.createElement('div');
+            markerElement.style.backgroundColor = '#00000000';
+            markerElement.style.borderColor = '#00000000';
+            markerElement.style.backgroundImage = 'url(location.png);'
+            markerElement.style.width = '25px';
+            markerElement.className = 'custom-marker';
+            return markerElement;
         }
     })
     .catch(error => console.error('Error:', error));

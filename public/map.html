@@ -18,12 +18,80 @@
 
         #map {
             position: absolute;
-            height: 100%;
-            top: 0;
+            height: 93%;
+            top: 7%;
             bottom: 0;
             width: 100%;
         }
- </style>
+
+        .floating-island {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          background-color: #F5F5F5;
+          border-radius: 10px;
+          width: 300px;
+          height: 300px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          padding: 10px;
+          margin: 20px;
+          overflow: auto; /* Added this line */
+        }
+        
+          /* Existing styles */
+
+          @media (max-width: 768px) {
+            .floating-island {
+              width: 200px;
+              height: 200px;
+            }
+          }
+
+          @media (min-width: 769px) and (max-width: 1024px) {
+            .floating-island {
+              width: 250px;
+              height: 250px;
+            }
+          }
+
+          @media (min-width: 1025px) {
+            .floating-island {
+              width: 300px;
+              height: 300px;
+            }
+          }
+
+        .stop {
+            width: 50px;
+            height: 50px;
+            background-color: #739072;
+            border-radius: 5%;
+            margin: 10px;
+        }
+
+        .hide-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #739072;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .mapboxgl-popup-close-button{
+          color: black;
+          margin: 0;
+          padding: 0;
+
+        }
+        h3{
+          line-height: 1;
+        }
+    </style>
   </head>
   <body>
     <div class="header">
@@ -35,7 +103,29 @@
             </div>
           </div>
         </div>
+    </div>
+    <button class="hide-button" style="z-index: 10; width: 5em;" onclick="toggleFloatingIsland()">Hide</button>
+    <div class="floating-island" style="z-index: 20;">
+        <h1 style="color: black; text-align: center; margin-bottom: 5px; text-decoration: underline;">Stops:</h1>
+        <ul style="list-style: none; margin-bottom: 0; padding: 0; color: black;" class="stops">
+        </ul>
+        
+    </div>
+    
     <div id='map'></div>
     <script src="map.js"></script>
+    <script>
+        function toggleFloatingIsland() {
+          var button = document.querySelector('.hide-button');
+          var floatingIsland = document.querySelector('.floating-island');
+          if (floatingIsland.style.display === 'none') {
+            floatingIsland.style.display = 'block';
+            button.textContent = 'Hide';
+          } else {
+            floatingIsland.style.display = 'none';
+            button.textContent = 'Show';
+          }
+        }
+    </script>
   </body>
 </html>

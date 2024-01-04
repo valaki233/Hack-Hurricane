@@ -34,7 +34,7 @@ app.post('/register', async (req, res) => {
     const prompt = `You are a professional theme park adviser and you need to decide where your client should go. The attractions are the following: '${attractionsString}'. And your client data pulled from a database is ${dataString}. Only return a json with the attractions in order of logic, for example dont put restaurant before a rollercoster. It should fill out the whole day, max 10 attractions, pay attention to put eating in the correct times`;
     console.log(prompt);
     const sysprompt = `You are ChatGPT, a large language model trained by OpenAI. Answer as concisely and shortly as possible. Only return the stops in json format nothing else no text no comments no additional information, VERY IMPORTANT IS THAT YOU SHOULD NOT PUT OTHER TEXT IN IT the json's list name must be 'attractions'! , Knowledge cutoff: 2021-September`
-    const ai = new openai.OpenAI({apiKey: process.env.OPENAI_API_KEY});
+    const ai = new openai.OpenAI({apiKey: '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'});
   
     const completion = await ai.chat.completions.create({
       messages: [{ role: "user", content: prompt }, { role: "system", content: sysprompt }],
