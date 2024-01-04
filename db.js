@@ -5,7 +5,6 @@ const sequelize = new Sequelize({
     storage: 'data.db', // Replace with the path to your SQLite database file
 });
 
-module.exports = sequelize;
 
 const Attractions = sequelize.define('Attractions', {
     // Model attributes are defined here
@@ -27,7 +26,7 @@ const Attractions = sequelize.define('Attractions', {
         allowNull: false
     },
 });
-const User = sequelize.define('Userdata', {
+const User = sequelize.define('User', {
     // Model attributes are defined here
     id: {
         type: Sequelize.DataTypes.INTEGER,
@@ -35,14 +34,6 @@ const User = sequelize.define('Userdata', {
         autoIncrement: true
     },
     name: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
-    username: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
-    password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
@@ -54,23 +45,34 @@ const User = sequelize.define('Userdata', {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
+    childNames: {
+        type: Sequelize.DataTypes.STRING,
+        // get() {
+        //     return this.getDataValue('childNames').split(';');
+        // },
+        // set(val) {
+        //     this.setDataValue('childNames', val.join(';'));
+        // },
+    },
     childAges: {
         type: Sequelize.DataTypes.STRING,
-        get() {
-            return this.getDataValue('childAges').split(';');
-        },
-        set(val) {
-        this.setDataValue('childAges', val.join(';'));
-        },
+        // get() {
+        //     return this.getDataValue('childAges').split(',').pop();
+        // },
+        // set(val) {
+        //     for (let i = 0; i < val.length; i++) {
+        //         final += val[i] + ',';
+        //     }
+        // },
     },
-    childSex: {
+    childGender: {
         type: Sequelize.DataTypes.STRING,
-        get() {
-            return this.getDataValue('childSex').split(';');
-        },
-        set(val) {
-        this.setDataValue('childSex', val.join(';'));
-        },
+        // get() {
+        //     return this.getDataValue('childSex').split(';');
+        // },
+        // set(val) {
+        // this.setDataValue('childSex', val.join(';'));
+        // },
     }
 });
 
@@ -78,3 +80,8 @@ const User = sequelize.define('Userdata', {
 sequelize.sync()
     .then(() => console.log('User table has been successfully created, if one doesn\'t exist'))
     .catch(error => console.log('This error occured', error));
+
+module.exports = {
+    sequelize,
+    User
+};

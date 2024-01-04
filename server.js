@@ -1,3 +1,13 @@
+// TODO:
+// fooldal style
+// form submit array baszas
+// del button
+// map
+
+// FEATURE:
+// send to phone route
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
@@ -5,7 +15,9 @@ const db = require('./db.js');
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // app.post('/register', async (req, res) => {
 //     const { username, password } = req.body;
@@ -49,9 +61,37 @@ app.get('/', (req, res) => {
 
 
 app.post('/register', async (req, res) => {
-  const { name, age } = req.body;
-  console.log(req.body);
-  res.status(200).redirect('/map.html');
+  try {
+    var childNumber = 0
+    var { name, age, childNames, childGender, childAges } = req.body;
+    console.log(req.body);
+    if (childNames) {
+      console.log("Converting started");
+      childNumber = childNames.length;
+      if (Array.isArray(childGender)) {
+        childGender = JSON.stringify(childGender);
+      }
+      if (Array.isArray(childAges)) {
+        childAges = JSON.stringify(childAges);
+      }
+      if (Array.isArray(childNames)) {
+        childNames = JSON.stringify(childNames);
+      }
+    }
+    const user = await db.User.create({ 
+      name, 
+      age, 
+      childNumber,
+      childNames, 
+      childAges,
+      childGender
+    });
+
+    res.status(200).redirect('/map.html');
+  } catch(err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while creating the user' });
+  }
 });
 
 

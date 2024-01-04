@@ -1,24 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefers-color-scheme: dark>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Theme-mapper</title>
+    <title>AI park</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">    
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 
-
   </head>
   <body>
-  <form action="http://localhost:3000/register" method="POST">
-    <label for="name">Parent Name:</label>
+    <div class="header">
+      <div class="container" style="text-align: center;">
+        <div class="row">
+          <div class="col-12">
+            <h1><a href="/about">ABOUT</a> :: <a href="">AI-PARK</a></h1>
+            
+          </div>
+        </div>
+      </div>
+    </body>
+
+  <form action="http://localhost:3000/register" method="POST" class="">
+    <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
 
-    <label for="age">Parent Age:</label>
+    <label for="age">Age:</label>
     <input type="number" id="age" name="age" required>
 
     <h3>Children:</h3>
@@ -31,22 +41,34 @@
   </form>
 
   <script>
+    var i = 0;
     function addChild() {
+      i++;
       const childrenContainer = document.getElementById('childrenContainer');
 
       const childDiv = document.createElement('div');
+      childDiv.classList.add('child');
 
       const nameLabel = document.createElement('label');
       nameLabel.textContent = 'Child Name:';
       const nameInput = document.createElement('input');
       nameInput.type = 'text';
-      nameInput.name = 'childName';
+      nameInput.name = 'childNames';
+      nameInput.id = `childNames${i}`;
       nameLabel.appendChild(nameInput);
+
+      const DELlabel = document.createElement('label');
+      DELlabel.textContent = 'Delete:';
+      const DEL = document.createElement('button');
+      DEL.name = 'childDEL';
+      DEL.id = `childDEL${i}`;
+      DELlabel.appendChild(DEL);
 
       const genderLabel = document.createElement('label');
       genderLabel.textContent = 'Gender:';
       const genderInput = document.createElement('select');
       genderInput.name = 'childGender';
+      genderInput.id = `childGender${i}`;
       const optionMale = document.createElement('option');
       optionMale.value = 'male';
       optionMale.textContent = 'Male';
@@ -61,12 +83,14 @@
       ageLabel.textContent = 'Age:';
       const ageInput = document.createElement('input');
       ageInput.type = 'number';
-      ageInput.name = 'childAge';
+      ageInput.name = 'childAges';
+      ageInput.id = `childAges${i}`;
       ageLabel.appendChild(ageInput);
 
       childDiv.appendChild(nameLabel);
       childDiv.appendChild(genderLabel);
       childDiv.appendChild(ageLabel);
+      childDiv.appendChild(DELlabel);
 
       childrenContainer.appendChild(childDiv);
     }
