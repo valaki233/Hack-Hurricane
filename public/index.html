@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 
   </head>
+  
   <body>
     <div class="header">
       <div class="container" style="text-align: center;">
@@ -22,91 +23,96 @@
           </div>
         </div>
       </div>
-    </body>
-
-  <form action="http://localhost:3000/register" method="POST" class="">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="age">Age:</label>
-    <input type="number" id="age" name="age" required>
-
-    <h3>Children:</h3>
-    <div id="childrenContainer">
-      <!-- Children will be dynamically added here -->
     </div>
 
-    <button type="button" onclick="addChild()">Add Child</button>
-    <button type="submit" value="submit">Give me a map</button>
-  </form>
+    <form action="http://localhost:3000/register" method="POST" class="">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
 
-  <script>
-    function delChild(id){
-      var child = document.getElementById(id).parentElement.parentElement;
-      childrenContainer.removeChild(child);
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required>
 
-    }
-    var i = 0;
-    function addChild() {
-      i++;
-      const childrenContainer = document.getElementById('childrenContainer');
+      <h3>Children:</h3>
+      <div id="childrenContainer">
+        <!-- Children will be dynamically added here -->
+      </div>
 
-      const childDiv = document.createElement('div');
-      childDiv.classList.add('child');
+      <div class="button-container-parent" style="position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: center; background-color: black;">
+        <!-- <div class="button-container" style="background-color: black; display: flex;"></div> -->
+          <button type="button" class="addkid" onclick="addChild()" style="margin-right: 5px;">Add Child</button>
+          <button type="submit" class="givemap" value="submit" style="margin-left: 5px;">Give me a map</button>
+        <!-- </div> -->
+      </div>
+    </form>
 
-      const nameLabel = document.createElement('label');
-      nameLabel.textContent = 'Child Name:';
-      const nameInput = document.createElement('input');
-      nameInput.type = 'text';
-      nameInput.name = 'childNames';
-      nameInput.id = `childNames${i}`;
-      nameLabel.appendChild(nameInput);
+    <script>
+      function delChild(id){
+        var child = document.getElementById(id).parentElement.parentElement;
+        childrenContainer.removeChild(child);
+      }
 
-      const DELlabel = document.createElement('label');
-      DELlabel.textContent = 'Delete:';
-      const DEL = document.createElement('button');
-      DEL.name = 'childDEL';
-      DEL.id = `childDEL${i}`;
-      DEL.type = 'button';
-      DEL.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
-</svg>`;
-      
-      DEL.style = 'margin-top: 5px; --primary-hover: #a13c2f; font-size: 1rem; ';
-      DELlabel.appendChild(DEL);
-      DEL.addEventListener('click', function(){
-        delChild(DEL.id);
-      });
-      const genderLabel = document.createElement('label');
-      genderLabel.textContent = 'Gender:';
-      const genderInput = document.createElement('select');
-      genderInput.name = 'childGender';
-      genderInput.id = `childGender${i}`;
-      const optionMale = document.createElement('option');
-      optionMale.value = 'male';
-      optionMale.textContent = 'Male';
-      const optionFemale = document.createElement('option');
-      optionFemale.value = 'female';
-      optionFemale.textContent = 'Female';
-      genderInput.appendChild(optionMale);
-      genderInput.appendChild(optionFemale);
-      genderLabel.appendChild(genderInput);
+      var i = 0;
+      function addChild() {
+        i++;
+        const childrenContainer = document.getElementById('childrenContainer');
 
-      const ageLabel = document.createElement('label');
-      ageLabel.textContent = 'Age:';
-      const ageInput = document.createElement('input');
-      ageInput.type = 'number';
-      ageInput.name = 'childAges';
-      ageInput.id = `childAges${i}`;
-      ageLabel.appendChild(ageInput);
+        const childDiv = document.createElement('div');
+        childDiv.classList.add('child');
 
-      childDiv.appendChild(nameLabel);
-      childDiv.appendChild(genderLabel);
-      childDiv.appendChild(ageLabel);
-      childDiv.appendChild(DELlabel);
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = 'Child Name:';
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.name = 'childNames';
+        nameInput.id = `childNames${i}`;
+        nameLabel.appendChild(nameInput);
 
-      childrenContainer.appendChild(childDiv);
-    }
-  </script>
+        const DELlabel = document.createElement('label');
+        DELlabel.textContent = 'Delete:';
+        const DEL = document.createElement('button');
+        DEL.name = 'childDEL';
+        DEL.id = `childDEL${i}`;
+        DEL.type = 'button';
+        DEL.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+        </svg>`;
+
+        DEL.style = 'margin-top: 5px; --primary-hover: #a13c2f; font-size: 1rem; ';
+        DELlabel.appendChild(DEL);
+        DEL.addEventListener('click', function(){
+          delChild(DEL.id);
+        });
+
+        const genderLabel = document.createElement('label');
+        genderLabel.textContent = 'Gender:';
+        const genderInput = document.createElement('select');
+        genderInput.name = 'childGender';
+        genderInput.id = `childGender${i}`;
+        const optionMale = document.createElement('option');
+        optionMale.value = 'male';
+        optionMale.textContent = 'Male';
+        const optionFemale = document.createElement('option');
+        optionFemale.value = 'female';
+        optionFemale.textContent = 'Female';
+        genderInput.appendChild(optionMale);
+        genderInput.appendChild(optionFemale);
+        genderLabel.appendChild(genderInput);
+
+        const ageLabel = document.createElement('label');
+        ageLabel.textContent = 'Age:';
+        const ageInput = document.createElement('input');
+        ageInput.type = 'number';
+        ageInput.name = 'childAges';
+        ageInput.id = `childAges${i}`;
+        ageLabel.appendChild(ageInput);
+
+        childDiv.appendChild(nameLabel);
+        childDiv.appendChild(genderLabel);
+        childDiv.appendChild(ageLabel);
+        childDiv.appendChild(DELlabel);
+
+        childrenContainer.appendChild(childDiv);
+      }
+    </script>
   </body>
 </html>
